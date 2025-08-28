@@ -163,8 +163,8 @@ echo "✅ Instalação concluída!"
    - **Compose path**: `docker-compose.yml`
 6. **Environment variables**:
    ```
-   APP_URL=https://krayin.enovas.com.br
-   KRAYIN_DOMAIN=krayin.enovas.com.br
+   APP_URL=https://crm.enovas.com.br
+KRAYIN_DOMAIN=crm.enovas.com.br
    MYSQL_ROOT_PASSWORD=R0Zur842QXc8KrayinRoot
    MYSQL_DATABASE=krayin_crm
    MYSQL_USER=krayin_user
@@ -253,7 +253,7 @@ chmod +x setup.sh
 ```
 
 ### 3. Testar Acesso
-- **URL**: `https://krayin.enovas.com.br`
+- **URL**: `https://crm.enovas.com.br`
 - **Login**: `admin@example.com`
 - **Senha**: `admin123`
 
