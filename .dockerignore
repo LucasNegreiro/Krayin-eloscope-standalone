@@ -1,0 +1,52 @@
+# Git
+.git/
+.gitignore
+
+# Documentation
+*.md
+README*
+
+# Logs
+*.log
+logs/
+
+# Node modules
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment files
+.env*
+!.env.example
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+tmp/
+temp/
+
+# Cache
+cache/
+.cache/
+
+# Build artifacts
+build/
+dist/
+
+# Backup files
+*.bak
+*.backup
+
+# Docker files (avoid recursion)
+Dockerfile*
+docker-compose*

@@ -1,0 +1,59 @@
+version: "3.8"
+
+services:
+  krayin_mysql:
+    image: mysql:8.0
+    container_name: krayin_mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - krayin_mysql_data:/var/lib/mysql
+    networks:
+      - krayin_net
+    labels:
+      - traefik.enable=false
+
+  krayin_app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: krayin_app
+    restart: unless-stopped
+    depends_on:
+      - krayin_mysql
+    environment:
+      APP_ENV: production
+      APP_DEBUG: false
+      APP_URL: ${APP_URL}
+      DB_CONNECTION: mysql
+      DB_HOST: krayin_mysql
+      DB_PORT: 3306
+      DB_DATABASE: ${MYSQL_DATABASE}
+      DB_USERNAME: ${MYSQL_USER}
+      DB_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - krayin_workspace:/var/www/html
+    networks:
+      - krayin_net
+      - n8n
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.krayin.rule=Host(`${KRAYIN_DOMAIN}`)
+      - traefik.http.routers.krayin.entrypoints=web,websecure
+      - traefik.http.routers.krayin.tls.certresolver=leresolver
+
+volumes:
+  krayin_mysql_data:
+  krayin_workspace:
+
+networks:
+  krayin_net:
+    external: true
+  n8n:
+    external: true
