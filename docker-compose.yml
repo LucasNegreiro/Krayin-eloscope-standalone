@@ -44,24 +44,14 @@ services:
       - n8n
     labels:
       - traefik.enable=true
-      - traefik.docker.network=n8n
       
-      # Roteador HTTP (redirecionamento para HTTPS)
-      - traefik.http.routers.krayin-http.rule=Host(`${KRAYIN_DOMAIN}`)
-      - traefik.http.routers.krayin-http.entrypoints=web
-      - traefik.http.routers.krayin-http.middlewares=krayin-redirect
+      # Definição do roteador para o domínio correto
+      - traefik.http.routers.krayin.rule=Host(`crm.enovas.com.br`)
+      - traefik.http.routers.krayin.entrypoints=websecure
+      - traefik.http.routers.krayin.tls.certresolver=letsencrypt
       
-      # Roteador HTTPS
-      - traefik.http.routers.krayin-https.rule=Host(`${KRAYIN_DOMAIN}`)
-      - traefik.http.routers.krayin-https.entrypoints=websecure
-      - traefik.http.routers.krayin-https.tls.certresolver=letsencrypt
-      - traefik.http.routers.krayin-https.service=krayin
-      
-      # Middleware de redirecionamento HTTP para HTTPS
-      - traefik.http.middlewares.krayin-redirect.redirectscheme.scheme=https
-      - traefik.http.middlewares.krayin-redirect.redirectscheme.permanent=true
-      
-      # Configuração do serviço
+      # Associação do serviço e porta interna do container
+      - traefik.http.routers.krayin.service=krayin
       - traefik.http.services.krayin.loadbalancer.server.port=80
       - traefik.http.services.krayin.loadbalancer.passHostHeader=true
 
