@@ -46,14 +46,14 @@ services:
       - traefik.enable=true
       
       # Roteador HTTP - Redirecionamento para HTTPS
-      - traefik.http.routers.krayin-http.rule=Host(`crm.enovas.com.br`)
+      - traefik.http.routers.krayin-http.rule=Host(`${KRAYIN_DOMAIN}`)
       - traefik.http.routers.krayin-http.entrypoints=web
       - traefik.http.routers.krayin-http.middlewares=krayin-redirect
       
       # Roteador HTTPS - Configuração principal (mantida igual)
-      - traefik.http.routers.krayin.rule=Host(`crm.enovas.com.br`)
+      - traefik.http.routers.krayin.rule=Host(`${KRAYIN_DOMAIN}`)
       - traefik.http.routers.krayin.entrypoints=websecure
-      - traefik.http.routers.krayin.tls.certresolver=letsencrypt
+      - traefik.http.routers.krayin.tls.certresolver=leresolver
       
       # Middleware de redirecionamento
       - traefik.http.middlewares.krayin-redirect.redirectscheme.scheme=https
