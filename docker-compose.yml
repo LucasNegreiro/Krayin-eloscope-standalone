@@ -45,10 +45,19 @@ services:
     labels:
       - traefik.enable=true
       
-      # Definição do roteador para o domínio correto
+      # Roteador HTTP - Redirecionamento para HTTPS
+      - traefik.http.routers.krayin-http.rule=Host(`crm.enovas.com.br`)
+      - traefik.http.routers.krayin-http.entrypoints=web
+      - traefik.http.routers.krayin-http.middlewares=krayin-redirect
+      
+      # Roteador HTTPS - Configuração principal (mantida igual)
       - traefik.http.routers.krayin.rule=Host(`crm.enovas.com.br`)
       - traefik.http.routers.krayin.entrypoints=websecure
       - traefik.http.routers.krayin.tls.certresolver=letsencrypt
+      
+      # Middleware de redirecionamento
+      - traefik.http.middlewares.krayin-redirect.redirectscheme.scheme=https
+      - traefik.http.middlewares.krayin-redirect.redirectscheme.permanent=true
       
       # Associação do serviço e porta interna do container
       - traefik.http.routers.krayin.service=krayin
